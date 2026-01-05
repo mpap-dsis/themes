@@ -23,7 +23,7 @@ class Themes extends Page
         return __('themes::themes.appearance');
     }
 
-    protected static string $view = 'themes::filament.pages.themes';
+    protected string $view = 'themes::filament.pages.themes';
 
     public function mount(): void
     {
