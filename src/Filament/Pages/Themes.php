@@ -2,6 +2,7 @@
 
 namespace Hasnayeen\Themes\Filament\Pages;
 
+use BackedEnum;
 use Filament\Facades\Filament;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
@@ -13,7 +14,7 @@ use Illuminate\Support\Arr;
 
 class Themes extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static BackedEnum | string | null $navigationIcon = 'heroicon-o-document-text';
 
     protected static ?string $title = 'Appearance';
 
