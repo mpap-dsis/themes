@@ -146,7 +146,7 @@
                                 <h3 class="text-sm font-semibold text-gray-600 pb-4">{{ __('themes::themes.no_light_mode') }}</h3>
                             @else
                                 <h3 class="text-sm font-semibold text-gray-600 pb-4">{{ __('themes::themes.light') }}</h3>
-                                <img src="{{ url('https://raw.githubusercontent.com/Hasnayeen/themes/3.x/assets/'.$name.'-light.png') }}" alt="{{ $name }} theme preview (light version)" class="border dark:border-gray-700 rounded-lg">
+                                <img src="{{ url('https://raw.githubusercontent.com/Hasnayeen/themes/4.x/assets/'.$name.'-light.png') }}" alt="{{ $name }} theme preview (light version)" class="border dark:border-gray-700 rounded-lg">
                             @endif
                         </div>
         
@@ -155,7 +155,7 @@
                                 <h3 class="text-sm font-semibold text-gray-600 pb-4">{{ __('themes::themes.no_dark_mode') }}</h3>
                             @else
                                 <h3 class="text-sm font-semibold text-gray-600 pb-4">{{ __('themes::themes.dark') }}</h3>
-                                <img src="{{ url('https://raw.githubusercontent.com/Hasnayeen/themes/3.x/assets/'.$name.'-dark.png') }}" alt="{{ $name }} theme preview (dark version)" class="border dark:border-gray-700 rounded-lg">
+                                <img src="{{ url('https://raw.githubusercontent.com/Hasnayeen/themes/4.x/assets/'.$name.'-dark.png') }}" alt="{{ $name }} theme preview (dark version)" class="border dark:border-gray-700 rounded-lg">
                             @endif
                         </div>
                     </div>

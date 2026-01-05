@@ -90,6 +90,7 @@ class ThemesMakeCommand extends Command
 
         $this->components->warn('Action is required to complete the theme setup:');
         $this->components->bulletList([
+            "Add `@tailwindcss/vite` plugin to `vite.config.js`: `<fg=magenta>import tailwindcss from '@tailwindcss/vite'</> and add `<fg=magenta>tailwindcss()</> to the plugins array`.",
             "Add a new item to the `input` array of `vite.config.js`: `<fg=magenta>resources/css/filament/{$panelId}/themes/{$name}.css</>`.",
             "Make sure to register the theme in `<fg=magenta>ThemesPlugin::registerTheme([{$themeClass}::getName() => {$themeClass}::class])`</></>",
             'Finally, run `npm run build` to compile the theme.',
@@ -110,45 +111,30 @@ class ThemesMakeCommand extends Command
 
         $this->info("Using NPM v{$npmVersion[0]}");
 
-        exec('npm install tailwindcss @tailwindcss/forms @tailwindcss/typography postcss autoprefixer --save-dev');
+        exec('npm install tailwindcss @tailwindcss/postcss @tailwindcss/vite --save-dev');
 
         $cssFilePath = resource_path("css/filament/{$panelId}/themes/{$name}.css");
-        $tailwindConfigFilePath = resource_path("css/filament/{$panelId}/themes/tailwind.{$name}.config.js");
 
         if (! $this->option('force') && $this->checkForCollision([
             $cssFilePath,
-            $tailwindConfigFilePath,
         ])) {
             return static::INVALID;
         }
-
-        $classPathPrefix = (string) str(Arr::first($panel->getPageDirectories()))
-            ->afterLast('Filament/')
-            ->beforeLast('Pages');
-
-        $viewPathPrefix = str($classPathPrefix)
-            ->explode('/')
-            ->map(fn ($segment) => Str::lower(Str::kebab($segment)))
-            ->implode('/');
 
         $this->copyStubToApp('ThemeCss', $cssFilePath, [
             'panel' => $panelId,
             'theme' => $name,
         ]);
-        $this->copyStubToApp('ThemeTailwindConfig', $tailwindConfigFilePath, [
-            'classPathPrefix' => $classPathPrefix,
-            'viewPathPrefix' => $viewPathPrefix,
-        ]);
 
-        $this->components->info("<fg=green>Successfully created resources/css/filament/{$panelId}/themes/{$theme}.css and resources/css/filament/{$panelId}/themes/tailwind.{$theme}.config.js!</>");
+        $this->components->info("<fg=green>Successfully created resources/css/filament/{$panelId}/themes/{$name}.css!</>");
 
         if (! file_exists(base_path('vite.config.js'))) {
             $this->components->warn('Action is required to complete the theme setup:');
             $this->components->bulletList([
-                "It looks like you don't have Vite installed. Please use your asset bundling system of choice to compile `resources/css/filament/{$panelId}/themes/{$theme}.css` into `public/css/filament/{$panelId}/themes/{$theme}.css`.",
+                "It looks like you don't have Vite installed. Please use your asset bundling system of choice to compile `resources/css/filament/{$panelId}/themes/{$name}.css` into `public/css/filament/{$panelId}/themes/{$name}.css`.",
                 "If you're not currently using a bundler, we recommend using Vite. Alternatively, you can use the Tailwind CLI with the following command:",
-                "npx tailwindcss --input ./resources/css/filament/{$panelId}/themes/{$theme}.css --output ./public/css/filament/{$panelId}/themes/{$theme}.css --config ./resources/css/filament/{$panelId}/themes/tailwind.{$theme}.config.js --minify",
-                "Make sure to register the theme in the {$theme} class inside `modifyPanelConfig` using `->theme(asset('css/filament/{$panelId}/themes/{$theme}.css'))`",
+                "npx @tailwindcss/cli --input ./resources/css/filament/{$panelId}/themes/{$name}.css --output ./public/css/filament/{$panelId}/themes/{$name}.css --minify",
+                "Make sure to register the theme in the {$themeClass} class inside `modifyPanelConfig` using `->theme(asset('css/filament/{$panelId}/themes/{$name}.css'))`",
             ]);
 
             return static::SUCCESS;

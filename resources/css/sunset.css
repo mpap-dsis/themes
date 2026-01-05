@@ -1,4 +1,8 @@
+@import "tailwindcss";
 @import '../../vendor/filament/filament/resources/css/theme.css';
+
+@source '../../src';
+@source '../../resources/views';
 
 body {
     @apply !bg-primary-50 dark:!bg-gray-950;
