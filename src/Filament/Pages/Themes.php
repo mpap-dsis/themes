@@ -2,7 +2,6 @@
 
 namespace Hasnayeen\Themes\Filament\Pages;
 
-use BackedEnum;
 use Filament\Facades\Filament;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
@@ -14,7 +13,7 @@ use Illuminate\Support\Arr;
 
 class Themes extends Page
 {
-    protected static BackedEnum | string | null $navigationIcon = 'heroicon-o-document-text';
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
     protected static ?string $title = 'Appearance';
 
@@ -23,7 +22,7 @@ class Themes extends Page
         return __('themes::themes.appearance');
     }
 
-    protected string $view = 'themes::filament.pages.themes';
+    protected static string $view = 'themes::filament.pages.themes';
 
     public function mount(): void
     {

@@ -6,6 +6,7 @@ use Composer\InstalledVersions;
 use Filament\Support\Assets\Asset;
 use Filament\Support\Assets\Css;
 use Filament\Support\Facades\FilamentAsset;
+use Hasnayeen\Themes\Commands\MigrateToTailwindV4Command;
 use Hasnayeen\Themes\Commands\ThemesMakeCommand;
 use Hasnayeen\Themes\Commands\UpgradeCommand;
 use Illuminate\Foundation\Console\AboutCommand;
@@ -111,8 +112,9 @@ class ThemesServiceProvider extends PackageServiceProvider
     protected function getCommands(): array
     {
         return [
-            UpgradeCommand::class,
+            MigrateToTailwindV4Command::class,
             ThemesMakeCommand::class,
+            UpgradeCommand::class,
         ];
     }
 }
