@@ -1,19 +1,21 @@
 @import "tailwindcss";
-@import '../../vendor/filament/filament/resources/css/theme.css';
+@import '../../vendor/filament/filament/resources/css/index.css';
 
 @source '../../src';
 @source '../../resources/views';
+
+@variant dark (&:where(.dark, .dark *));
 
 body {
     @apply !bg-primary-50 dark:!bg-gray-950;
 }
 
 .fi-sidebar {
-    @apply p-4 !important;
+    @apply !p-4;
 }
 
 .fi-sidebar-header {
-    @apply bg-transparent ring-0 shadow-none !important;
+    @apply !bg-transparent !ring-0 !shadow-none;
 }
 
 .fi-sidebar-item-active a {

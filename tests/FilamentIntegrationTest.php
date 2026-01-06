@@ -167,3 +167,51 @@ describe('Livewire v3 Compatibility', function () {
             ->toExtend(\Filament\Pages\Page::class);
     });
 });
+
+describe('Filament 4 Requirements', function () {
+    it('requires Filament 4.x in composer.json', function () {
+        $composerJson = json_decode(file_get_contents(__DIR__ . '/../composer.json'), true);
+
+        $filamentRequirement = $composerJson['require']['filament/filament'] ?? null;
+
+        expect($filamentRequirement)->not->toBeNull();
+        expect($filamentRequirement)->toMatch('/^\^4\./');
+    });
+
+    it('requires PHP 8.2+ in composer.json', function () {
+        $composerJson = json_decode(file_get_contents(__DIR__ . '/../composer.json'), true);
+
+        $phpRequirement = $composerJson['require']['php'] ?? null;
+
+        expect($phpRequirement)->not->toBeNull();
+        expect($phpRequirement)->toContain('8.2');
+    });
+
+    it('Filament support package is version 4.x', function () {
+        $version = \Composer\InstalledVersions::getVersion('filament/support');
+
+        expect($version)->toStartWith('4.');
+    });
+
+    it('compiled CSS files exist for all themes', function () {
+        $themes = ['default', 'dracula', 'nord', 'sunset'];
+        $distPath = __DIR__ . '/../resources/dist';
+
+        foreach ($themes as $theme) {
+            $cssFile = "{$distPath}/{$theme}.css";
+            expect(file_exists($cssFile))->toBeTrue("Compiled CSS missing for {$theme}");
+        }
+    });
+
+    it('compiled CSS files are not empty', function () {
+        $themes = ['default', 'dracula', 'nord', 'sunset'];
+        $distPath = __DIR__ . '/../resources/dist';
+
+        foreach ($themes as $theme) {
+            $cssFile = "{$distPath}/{$theme}.css";
+            $content = file_get_contents($cssFile);
+
+            expect(strlen($content))->toBeGreaterThan(1000, "Compiled CSS for {$theme} seems too small");
+        }
+    });
+});

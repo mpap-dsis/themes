@@ -1,8 +1,10 @@
 @import "tailwindcss";
-@import '../../vendor/filament/filament/resources/css/theme.css';
+@import '../../vendor/filament/filament/resources/css/index.css';
 
 @source '../../src';
 @source '../../resources/views';
+
+@variant dark (&:where(.dark, .dark *));
 
 body {
     @apply !bg-gray-950 !text-white;

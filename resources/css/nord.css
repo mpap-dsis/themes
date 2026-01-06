@@ -1,8 +1,10 @@
 @import "tailwindcss";
-@import '../../vendor/filament/filament/resources/css/theme.css';
+@import '../../vendor/filament/filament/resources/css/index.css';
 
 @source '../../src';
 @source '../../resources/views';
+
+@variant dark (&:where(.dark, .dark *));
 
 @config './tailwind.nord.config.js';
 
@@ -27,9 +29,12 @@
 }
 
 .fi-section, .fi-wi-stats-overview-stat, .fi-ta-ctn, .fi-tenant-menu, .fi-dropdown-panel {
-    @apply border border-transparent dark:bg-secondary-900
-        [background:linear-gradient(white,white)_padding-box,linear-gradient(to_right,rgb(var(--primary-500)),rgb(var(--info-500)))_border-box;]
-        dark:[background:linear-gradient(#1e2c2e,#1e2c2e)_padding-box,linear-gradient(to_right,rgb(var(--primary-800)),rgb(var(--info-800)))_border-box;];
+    @apply border border-transparent dark:bg-secondary-900;
+    background: linear-gradient(white, white) padding-box, linear-gradient(to right, rgb(var(--primary-500)), rgb(var(--info-500))) border-box;
+}
+
+.dark .fi-section, .dark .fi-wi-stats-overview-stat, .dark .fi-ta-ctn, .dark .fi-tenant-menu, .dark .fi-dropdown-panel {
+    background: linear-gradient(#1e2c2e, #1e2c2e) padding-box, linear-gradient(to right, rgb(var(--primary-800)), rgb(var(--info-800))) border-box;
 }
 
 .fi-topbar-item-active a, .fi-topbar-item-active button {

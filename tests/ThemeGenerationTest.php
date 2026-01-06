@@ -37,8 +37,10 @@ describe('Theme CSS Stub Generation', function () {
         expect($stubContent)
             ->toContain('@import "tailwindcss"')
             ->toContain('@source')
-            ->toContain('filament/filament/resources/css/theme.css')
-            ->not->toContain('@tailwind');
+            ->toContain('filament/filament/resources/css/index.css')
+            ->toContain('@variant dark')
+            ->not->toContain('@tailwind')
+            ->not->toContain('filament/filament/resources/css/theme.css');
     });
 
     it('generates PostCSS config stub with Tailwind v4 plugin', function () {

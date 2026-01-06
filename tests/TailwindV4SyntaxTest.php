@@ -85,14 +85,40 @@ describe('Tailwind v4 CSS Structure', function () {
         }
     });
 
-    it('validates theme CSS imports Filament theme', function () {
+    it('validates theme CSS imports Filament index.css for Filament 4', function () {
         $cssFiles = glob(__DIR__ . '/../resources/css/*.css');
 
         foreach ($cssFiles as $cssFile) {
             $content = file_get_contents($cssFile);
 
-            // Must import Filament's theme CSS
-            expect($content)->toContain('filament/filament/resources/css/theme.css');
+            // Must import Filament's index.css (Filament 4 structure)
+            expect($content)->toContain('filament/filament/resources/css/index.css');
+
+            // Must NOT import theme.css directly (causes double tailwind import)
+            expect($content)->not->toContain('filament/filament/resources/css/theme.css');
+        }
+    });
+
+    it('validates theme CSS has dark variant directive for Filament 4', function () {
+        $cssFiles = glob(__DIR__ . '/../resources/css/*.css');
+
+        foreach ($cssFiles as $cssFile) {
+            $content = file_get_contents($cssFile);
+
+            // Must have @variant dark directive for dark mode support
+            expect($content)->toContain('@variant dark');
+        }
+    });
+
+    it('validates theme CSS does not use deprecated !important syntax', function () {
+        $cssFiles = glob(__DIR__ . '/../resources/css/*.css');
+
+        foreach ($cssFiles as $cssFile) {
+            $content = file_get_contents($cssFile);
+
+            // Must NOT use "!important" as separate keyword (Tailwind v3 syntax)
+            // Should use "!" prefix instead (e.g., !p-4 instead of p-4 !important)
+            expect($content)->not->toMatch('/@apply[^;]*\s+!important/');
         }
     });
 });
